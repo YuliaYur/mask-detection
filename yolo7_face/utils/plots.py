@@ -17,8 +17,8 @@ import torch
 import yaml
 from PIL import Image, ImageDraw, ImageFont
 
-from utils.general import xywh2xyxy, xyxy2xywh
-from utils.metrics import fitness
+from yolo7_face.utils.general import xywh2xyxy, xyxy2xywh
+from yolo7_face.utils.metrics import fitness
 
 # Settings
 matplotlib.rc('font', **{'size': 11})
