@@ -5,6 +5,7 @@ import json
 import cv2
 import numpy as np
 import torch
+from tqdm import tqdm
 
 from yolo7_face.models.experimental import attempt_load
 from yolo7_face.utils.datasets import LoadImages
@@ -17,7 +18,7 @@ def detect(source: str = '../dataset/upd',
            weights: str = '../models/yolov7-w6-face.pt',
            img_size: int = 640,
            conf_threshold: float = 0.25,
-           iou_threshold: float = 0.45) -> Tuple[List[np.ndarray], List[np.ndarray], List[Path]]:
+           iou_threshold: float = 0.45) -> Tuple[List[np.ndarray], List[np.ndarray], List[Path], List[Tuple[int]]]:
 
     device = select_device('cpu')
 
@@ -30,6 +31,7 @@ def detect(source: str = '../dataset/upd',
     bounding_boxes = []
     confidences = []
     paths = []
+    shapes = []
     for path, img, im0s, _ in dataset:
         print()
 
@@ -51,8 +53,9 @@ def detect(source: str = '../dataset/upd',
         bounding_boxes.append(np.array(detection[:, :4]))
         confidences.append(np.array(detection[:, 4]))
         paths.append(Path(path))
+        shapes.append(im0s.shape)
 
-    return bounding_boxes, confidences, paths
+    return bounding_boxes, confidences, paths, shapes
 
 
 def save_bounding_boxes(bounding_boxes: List[np.ndarray],
@@ -118,9 +121,10 @@ def save_labeled_image(bounding_boxes: List[np.ndarray],
 def save_crops(bounding_boxes: List[np.ndarray], paths: List[Path], save_dir: Path) -> None:
     save_dir.mkdir()
 
-    for bb, path in zip(bounding_boxes, paths):
+    for bb, path in tqdm(zip(bounding_boxes, paths)):
         im0s = cv2.imread(str(path))  # BGR
 
         for i, xyxy in enumerate(bb):
             xyxy = xyxy * np.array([im0s.shape[1], im0s.shape[0]] * 2)
             save_one_box(xyxy, im0s, file=save_dir / f'{path.stem}_crop{i}.png', BGR=True)
+            # VGG-Face2 -- file=save_dir / f'{str(path)[-19:-12]}/{path.name}'
