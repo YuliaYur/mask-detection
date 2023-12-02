@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mask-detection-cpu:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    image: mask-detection:cpu
+
+  mask-detection-lab:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile_Jupyter
+    image: mask-detection:lab
+    depends_on:
+      - mask-detection-cpu
+    volumes:
+      - ./:/Workspace
+      - ${DATA_PATH:-./dataset/}:/Data
+    ports:
+      - 8888:8888
+    environment:
+      - PYTHONPATH=/Workspace
+    entrypoint: ["jupyter-lab", "--ip", "0.0.0.0", "--port", "8888", "--allow-root"]

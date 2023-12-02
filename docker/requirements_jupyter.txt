@@ -1,0 +1,10 @@
+jupyter==1.0.0
+jupyterlab==4.0.6
+ipywidgets==8.1.1
+xeus-python==0.15.8
+ptvsd==4.3.2
+mplcursors==0.5.2
+jupyterlab-widgets==3.0.9
+widgetsnbextension==4.0.9
+ipympl==0.9.3
+markupsafe==2.1.3

@@ -1,0 +1,25 @@
+FROM mask-detection:cpu
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG SETUP_DIR=/setup
+
+RUN apt-get -qqy update && apt-get -qqy upgrade && \
+    apt-get --no-install-recommends -qqy install curl ffmpeg
+
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+
+RUN apt install --no-install-recommends -y nodejs
+
+RUN python3.9 -m pip install --upgrade --no-cache-dir pip
+
+ADD requirements_jupyter.txt ${SETUP_DIR}/requirements_jupyter.txt
+RUN python3.9 -m pip --no-cache-dir install -r requirements_jupyter.txt
+
+RUN jupyter notebook --generate-config
+# password is generated with jupyter_server.auth.passwd(passphrase=my_pass, algorithm='sha256')
+RUN echo "c.ServerApp.password='sha256:34becf47800d:cc56e2426708b29a5ecc9682dd99425eb435bd01f291b5c1ccbfc6facdd498a1'">>/root/.jupyter/jupyter_notebook_config.py
+RUN echo "c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}">>/root/.jupyter/jupyter_notebook_config.py
+
+WORKDIR /
+
+CMD jupyter-lab --ip 0.0.0.0 --port 8888 --allow-root
