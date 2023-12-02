@@ -1,7 +1,7 @@
 import cv2
 
 # Demo libs
-from spiga.demo.visualize.layouts.plot_basics import BasicLayout
+from spiga_project.spiga.demo.visualize.layouts.plot_basics import BasicLayout
 
 
 class BboxLayout(BasicLayout):

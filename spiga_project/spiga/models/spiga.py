@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import spiga.models.gnn.pose_proj as pproj
-from spiga.models.cnn.cnn_multitask import MultitaskCNN
-from spiga.models.gnn.step_regressor import StepRegressor, RelativePositionEncoder
+import spiga_project.spiga.models.gnn.pose_proj as pproj
+from spiga_project.spiga.models.cnn.cnn_multitask import MultitaskCNN
+from spiga_project.spiga.models.gnn.step_regressor import StepRegressor, RelativePositionEncoder
 
 
 class SPIGA(nn.Module):

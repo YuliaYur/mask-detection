@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import torch
 
-from spiga.data.loaders.augmentors.modern_posit import PositPose
-from spiga.data.loaders.augmentors.heatmaps import Heatmaps
-from spiga.data.loaders.augmentors.boundary import AddBoundary
-from spiga.data.loaders.augmentors.landmarks import HorizontalFlipAug, RSTAug, OcclusionAug, \
+from spiga_project.spiga.data.loaders.augmentors.modern_posit import PositPose
+from spiga_project.spiga.data.loaders.augmentors.heatmaps import Heatmaps
+from spiga_project.spiga.data.loaders.augmentors.boundary import AddBoundary
+from spiga_project.spiga.data.loaders.augmentors.landmarks import HorizontalFlipAug, RSTAug, OcclusionAug, \
                                               LightingAug, BlurAug, TargetCropAug
 
 

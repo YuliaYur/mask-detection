@@ -1,7 +1,7 @@
 import torch.nn as nn
 
-from spiga.models.gnn.layers import MLP
-from spiga.models.gnn.gat import GAT
+from spiga_project.spiga.models.gnn.layers import MLP
+from spiga_project.spiga.models.gnn.gat import GAT
 
 
 class StepRegressor(nn.Module):

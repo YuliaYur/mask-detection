@@ -1,8 +1,8 @@
 from torch import nn
-from spiga.models.cnn.layers import Conv, Residual
-from spiga.models.cnn.hourglass import HourglassCore
-from spiga.models.cnn.coord_conv import AddCoordsTh
-from spiga.models.cnn.transform_e2p import E2Ptransform
+from spiga_project.spiga.models.cnn.layers import Conv, Residual
+from spiga_project.spiga.models.cnn.hourglass import HourglassCore
+from spiga_project.spiga.models.cnn.coord_conv import AddCoordsTh
+from spiga_project.spiga.models.cnn.transform_e2p import E2Ptransform
 
 
 class MultitaskCNN(nn.Module):

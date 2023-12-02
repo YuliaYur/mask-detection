@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 import cv2
 
-from spiga.data.loaders.transforms import TargetCrop, ToOpencv, AddModel3D
+from spiga_project.spiga.data.loaders.transforms import TargetCrop, ToOpencv, AddModel3D
 
 
 def get_transformers(data_config):

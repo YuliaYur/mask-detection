@@ -5,16 +5,16 @@ import torch
 import numpy as np
 
 # Paths
-weights_path_dft = pkg_resources.resource_filename('spiga', 'models/weights')
+weights_path_dft = pkg_resources.resource_filename('spiga_project.spiga', 'models/weights')
 
-import spiga.inference.pretreatment as pretreat
-from spiga.models.spiga import SPIGA
-from spiga.inference.config import ModelConfig
+import spiga_project.spiga.inference.pretreatment as pretreat
+from spiga_project.spiga.models.spiga import SPIGA
+from spiga_project.spiga.inference.config import ModelConfig
 
 
 class SPIGAFramework:
 
-    def __init__(self, model_cfg: ModelConfig(), gpus=[0], load3DM=True):
+    def __init__(self, model_cfg: ModelConfig(), gpus=[], load3DM=True):
 
         # Parameters
         self.model_cfg = model_cfg
@@ -42,7 +42,7 @@ class SPIGAFramework:
             model_state_dict = torch.load(weights_file)
 
         self.model.load_state_dict(model_state_dict)
-        self.model = self.model.cuda(gpus[0])
+        self.model = self.model.cpu()
         self.model.eval()
         print('SPIGA model loaded!')
 
@@ -67,6 +67,30 @@ class SPIGAFramework:
         batch_crops, crop_bboxes = self.pretreat(image, bboxes)
         outputs = self.net_forward(batch_crops)
         features = self.postreatment(outputs, crop_bboxes, bboxes)
+        return features
+
+    def inference_cropped_images(self, images, bboxes):
+        crop_bboxes = []
+        crop_images = []
+        for image, bbox in zip(images, bboxes):
+            sample = {'image': copy.deepcopy(image),
+                      'bbox': copy.deepcopy(bbox)}
+            sample_crop = self.transforms(sample)
+            crop_bboxes.append(sample_crop['bbox'])
+            crop_images.append(sample_crop['image'])
+
+        # Images to tensor and device
+        batch_images = torch.tensor(np.array(crop_images), dtype=torch.float)
+        batch_images = self._data2device(batch_images)
+        # Batch 3D model and camera intrinsic matrix
+        batch_model3D = self.model3d.unsqueeze(0).repeat(len(bboxes), 1, 1)
+        batch_cam_matrix = self.cam_matrix.unsqueeze(0).repeat(len(bboxes), 1, 1)
+
+        # SPIGA inputs
+        batch_crops = [batch_images, batch_model3D, batch_cam_matrix]
+
+        outputs = self.net_forward(batch_crops)
+        features = self.postreatment(outputs, crop_bboxes, crop_bboxes)
         return features
 
     def pretreat(self, image, bboxes):
@@ -108,10 +132,10 @@ class SPIGAFramework:
             landmarks_out = landmarks_out.transpose((1, 0, 2))
             features['landmarks'] = landmarks_out.tolist()
 
-        # Pose output
-        if 'Pose' in output.keys():
-            pose = output['Pose'].cpu().detach().numpy()
-            features['headpose'] = pose.tolist()
+        # # Pose output
+        # if 'Pose' in output.keys():
+        #     pose = output['Pose'].cpu().detach().numpy()
+        #     features['headpose'] = pose.tolist()
 
         return features
 
@@ -133,5 +157,5 @@ class SPIGAFramework:
                 data[k] = self._data2device(v)
         else:
             with torch.no_grad():
-                data_var = data.cuda(device=self.gpus[0], non_blocking=True)
+                data_var = data.cpu()
         return data_var

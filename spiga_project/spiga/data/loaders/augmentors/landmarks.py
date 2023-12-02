@@ -5,7 +5,7 @@ from PIL import Image
 from torchvision import transforms
 
 # My libs
-import spiga.data.loaders.augmentors.utils as dlu
+import spiga_project.spiga.data.loaders.augmentors.utils as dlu
 
 
 class HorizontalFlipAug:

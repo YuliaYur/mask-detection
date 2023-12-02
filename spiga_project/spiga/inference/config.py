@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from spiga.data.loaders.dl_config import DatabaseStruct
+from spiga_project.spiga.data.loaders.dl_config import DatabaseStruct
 
 MODELS_URL = {'wflw': 'https://drive.google.com/uc?export=download&confirm=yes&id=1h0qA5ysKorpeDNRXe9oYkVcVe8UYyzP7',
               '300wpublic': 'https://drive.google.com/uc?export=download&confirm=yes&id=1YrbScfMzrAAWMJQYgxdLZ9l57nmTdpQC',
