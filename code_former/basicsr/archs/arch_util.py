@@ -10,8 +10,8 @@ from torch.nn import functional as F
 from torch.nn import init as init
 from torch.nn.modules.batchnorm import _BatchNorm
 
-from basicsr.ops.dcn import ModulatedDeformConvPack, modulated_deform_conv
-from basicsr.utils import get_root_logger
+from code_former.basicsr.ops.dcn import ModulatedDeformConvPack, modulated_deform_conv
+from code_former.basicsr.utils import get_root_logger
 
 
 @torch.no_grad()

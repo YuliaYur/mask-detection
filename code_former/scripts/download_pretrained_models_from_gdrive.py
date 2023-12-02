@@ -2,7 +2,7 @@ import argparse
 import os
 from os import path as osp
 
-# from basicsr.utils.download_util import download_file_from_google_drive
+# from code_former.basicsr.utils.download_util import download_file_from_google_drive
 import gdown
 
 

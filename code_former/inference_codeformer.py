@@ -4,21 +4,21 @@ import argparse
 import glob
 import torch
 from torchvision.transforms.functional import normalize
-from basicsr.utils import imwrite, img2tensor, tensor2img
-from basicsr.utils.download_util import load_file_from_url
-from basicsr.utils.misc import gpu_is_available, get_device
+from code_former.basicsr.utils import imwrite, img2tensor, tensor2img
+from code_former.basicsr.utils.download_util import load_file_from_url
+from code_former.basicsr.utils.misc import gpu_is_available, get_device
 from facelib.utils.face_restoration_helper import FaceRestoreHelper
 from facelib.utils.misc import is_gray
 
-from basicsr.utils.registry import ARCH_REGISTRY
+from code_former.basicsr.utils.registry import ARCH_REGISTRY
 
 pretrain_model_url = {
     'restoration': 'https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/codeformer.pth',
 }
 
 def set_realesrgan():
-    from basicsr.archs.rrdbnet_arch import RRDBNet
-    from basicsr.utils.realesrgan_utils import RealESRGANer
+    from code_former.basicsr.archs.rrdbnet_arch import RRDBNet
+    from code_former.basicsr.utils.realesrgan_utils import RealESRGANer
 
     use_half = False
     if torch.cuda.is_available(): # set False in CPU/MPS mode
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         input_img_list = [args.input_path]
         result_root = f'results/test_img_{w}'
     elif args.input_path.endswith(('mp4', 'mov', 'avi', 'MP4', 'MOV', 'AVI')): # input video path
-        from basicsr.utils.video_util import VideoReader, VideoWriter
+        from code_former.basicsr.utils.video_util import VideoReader, VideoWriter
         input_img_list = []
         vidreader = VideoReader(args.input_path)
         image = vidreader.get_frame()
