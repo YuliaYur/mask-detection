@@ -4,7 +4,7 @@ from podm import coco_decoder
 
 with open('annotation/school/annotation.json') as fp:
     gold_dataset = coco_decoder.load_true_object_detection_dataset(fp)
-with open('prediction/school/prediction_both82_upd.json') as fp:
+with open(f'prediction/school/eff_b3_original_data_epoch_6.json') as fp:
     pred_dataset = coco_decoder.load_pred_object_detection_dataset(fp, gold_dataset)
 
 gt_BoundingBoxes = get_bounding_boxes(gold_dataset)
