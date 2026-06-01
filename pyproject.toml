@@ -18,3 +18,9 @@ extend-exclude = '''
 | docker
 )/
 '''
+
+[tool.pytest.ini_options]
+# Put the repo root on sys.path so the tests can `import src...` regardless of how
+# pytest is invoked.
+pythonpath = ["."]
+testpaths = ["tests"]

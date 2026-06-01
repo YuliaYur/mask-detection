@@ -2,12 +2,12 @@
 
 PYTHON ?= python
 
-# Our code lives in src/; the vendored subtrees (yolo7_face, spiga_project, code_former)
-# and the research notebooks are intentionally excluded from formatting and linting.
-SOURCES = src
+# Our code lives in src/ and tests/; the vendored subtrees (yolo7_face, spiga_project,
+# code_former) and the research notebooks are excluded from formatting and linting.
+SOURCES = src tests
 
 install:
-	$(PYTHON) -m pip install -r docker/requirements.txt -r requirements-dev.txt
+	$(PYTHON) -m pip install -r docker/requirements.txt -r requirements-dev.txt -r requirements-test.txt
 
 format:
 	$(PYTHON) -m black $(SOURCES)
@@ -22,4 +22,4 @@ lint:
 test:
 	$(PYTHON) -m pytest
 
-check: format-check lint
+check: format-check lint test

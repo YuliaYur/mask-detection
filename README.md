@@ -181,17 +181,23 @@ git subtree pull --prefix=<subdirectory> <remote-name> <branch> --squash
 
 ## Development
 
-Formatting and linting cover **`src/` only** — the vendored subtrees and the research
-notebooks are excluded.
+Formatting, linting and tests cover **`src/` and `tests/`** — the vendored subtrees and the
+research notebooks are excluded.
 
 ```bash
-pip install -r requirements-dev.txt   # black, flake8, pylint, pytest
+pip install -r requirements-dev.txt -r requirements-test.txt   # tools + light test deps
 make format        # auto-format with black
-make check         # black --check + flake8 + pylint
+make test          # run the unit tests
+make check         # black --check + flake8 + pylint + pytest
 ```
 
-On Windows use `make.bat` instead of `make` (e.g. `make.bat check`). GitHub Actions runs the
-black format check and flake8 on every push and pull request (see
+On Windows use `make.bat` instead of `make` (e.g. `make.bat check`).
+
+The unit tests need only **light dependencies** (`requirements-test.txt` — numpy, OpenCV,
+shapely, …, no PyTorch/TensorFlow), so they run fast and the heavy model code is exercised
+via lazy imports. They cover the CLI argument parsers, the dataset→COCO converters, the
+synthetic-data sampling, and the mAP computation. GitHub Actions runs the black format check,
+flake8, and the tests on every push and pull request (see
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
 
 ## License

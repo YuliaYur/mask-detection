@@ -1,0 +1,8 @@
+# Light runtime dependencies needed to run the unit tests (no torch / tensorflow).
+# CI installs these instead of the full docker/requirements.txt.
+numpy==1.26.1
+opencv-python-headless==4.8.1.78
+xmltodict==0.13.0
+tqdm==4.66.1
+shapely==2.0.2
+object-detection-metrics==0.4.post1
