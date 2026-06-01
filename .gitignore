@@ -159,8 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-# Claude Code local config / context (e.g. the thesis under .claude/)
-.claude/
-
 # Datasets (not committed — see the README for sources)
 dataset/
+
+# Annotated outputs from `python -m src.detect`
+runs/
