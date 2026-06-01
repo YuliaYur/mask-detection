@@ -23,6 +23,17 @@ onnxruntime===1.10.0
 
 # extras --------------------------------------
 thop==0.1.1.post2209072238  # FLOPS computation
+ptflops>=0.7  # FLOPs of the PyTorch detector (src.flops)
 pycocotools==2.0.7  # COCO mAP
 xmltodict==0.13.0
 object-detection-metrics==0.4.post1
+shapely==2.0.2  # required by object-detection-metrics for mAP
+
+# CodeFormer (code_former/basicsr) ------------
+lpips==0.1.4
+addict==2.4.0
+future==0.18.3
+lmdb==1.4.1
+yapf==0.40.2
+dominate==2.8.0
+gdown==4.7.1

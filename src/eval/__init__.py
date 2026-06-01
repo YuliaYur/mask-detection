@@ -1,17 +1,9 @@
-category_id = {'with_mask': 1, 'without_mask': 0}
+category_id = {"with_mask": 1, "without_mask": 0}
 
 blank_annotations = {
     "categories": [
-        {
-            "id": 1,
-            "name": "with_mask",
-            "supercategory": ""
-        },
-        {
-            "id": 0,
-            "name": "without_mask",
-            "supercategory": ""
-        }
+        {"id": 1, "name": "with_mask", "supercategory": ""},
+        {"id": 0, "name": "without_mask", "supercategory": ""},
     ],
     "licenses": [],
     "annotations": [],
@@ -22,6 +14,6 @@ blank_annotations = {
         "url": "",
         "date_created": "",
         "version": "",
-        "year": 0
-    }
+        "year": 0,
+    },
 }
