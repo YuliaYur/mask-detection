@@ -63,6 +63,25 @@ def test_sample_faces_parser_defaults():
         parser.parse_args(["--out-dir", "out"])
 
 
+def test_detect_parser_defaults():
+    from src.detect import build_parser
+
+    parser = build_parser()
+    args = parser.parse_args(
+        ["--source", "photo.jpg", "--detector", "d.pt", "--classifier", "c.h5"]
+    )
+    from pathlib import Path
+
+    assert str(args.source) == "photo.jpg"
+    assert args.out_dir == Path("runs/detect")
+    assert args.conf == 0.25
+    assert args.img_size == 640
+    assert args.codeformer is None
+
+    with pytest.raises(SystemExit):  # --source is required
+        parser.parse_args(["--detector", "d.pt", "--classifier", "c.h5"])
+
+
 def test_draw_masks_parser_defaults():
     from src.synthetic.draw_masks import build_parser
 

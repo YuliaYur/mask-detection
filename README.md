@@ -204,6 +204,22 @@ Every pipeline is a CLI. The original exploratory notebooks live in
 [`research/`](research/) (see [`research/README.md`](research/README.md)); the CLIs below are the
 reproducible entry points distilled from them.
 
+### Run on your own images
+
+The quickest way to see it work — runs the two-stage detector on an image (or a folder of images)
+and writes a copy with each face boxed **green** (mask) or **red** (no mask):
+
+```bash
+python -m src.detect --source sample_images\school_sample.png \
+    --detector models/yolov7-lite-s.pt \
+    --classifier models/efficientnet_v2_b3/combined_data/efficientnetv2_b3_combined_data_epoch_6_3.h5
+# annotated images are written to runs/detect/ (use --out-dir to change)
+```
+
+`--source` may be a single image or a directory; add `--codeformer code_former/weights/CodeFormer/codeformer.pth`
+for the three-stage variant. The trained weights ship with the repo, so this runs out of the box —
+producing the same green/red visualization shown at the top of this README.
+
 ### Train the classifier
 
 ```bash
