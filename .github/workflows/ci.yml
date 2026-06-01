@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
+  lint-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,11 +19,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dev tools
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements-dev.txt
+          # dev tools + the light runtime deps the tests need (no torch / tensorflow)
+          python -m pip install -r requirements-dev.txt -r requirements-test.txt
       - name: Format check (black)
-        run: black --check src
+        run: black --check src tests
       - name: Lint (flake8)
-        run: flake8 src
+        run: flake8 src tests
+      - name: Tests
+        run: python -m pytest

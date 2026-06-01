@@ -2,7 +2,7 @@
 setlocal
 
 set PYTHON=python
-set SOURCES=src
+set SOURCES=src tests
 
 if "%~1"=="" goto help
 if /I "%~1"=="install" goto install
@@ -15,7 +15,7 @@ if /I "%~1"=="check" goto check
 goto help
 
 :install
-%PYTHON% -m pip install -r docker/requirements.txt -r requirements-dev.txt
+%PYTHON% -m pip install -r docker/requirements.txt -r requirements-dev.txt -r requirements-test.txt
 goto end
 
 :format
@@ -39,6 +39,8 @@ goto end
 call %~f0 format-check
 if errorlevel 1 goto end
 call %~f0 lint
+if errorlevel 1 goto end
+call %~f0 test
 goto end
 
 :help
