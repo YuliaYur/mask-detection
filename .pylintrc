@@ -1,0 +1,15 @@
+[MASTER]
+ignore=.venv,.idea,build,dist,yolo7_face,spiga_project,code_former,research,dataset,models,docker
+ignore-paths=^(yolo7_face|spiga_project|code_former)/.*$
+
+[MESSAGES CONTROL]
+# Keep only real errors/fatals (E, F). Style (C, R, W) is left to black/flake8, and
+# import/attribute resolution is disabled so heavy third-party and vendored modules
+# (torch, tensorflow, yolo7_face, ...) don't produce false positives.
+disable=C,R,W,import-error,no-name-in-module,no-member
+
+[FORMAT]
+max-line-length=100
+
+[TYPECHECK]
+ignored-modules=cv2,torch,torchvision,tensorflow,keras,yolo7_face,spiga_project,code_former,podm,spiga
